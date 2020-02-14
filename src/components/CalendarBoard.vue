@@ -3,8 +3,11 @@
         <section>
             <b-field label="Select a date">
                 <b-datepicker
+                    type="month"
                     placeholder="Click to select..."
-                    icon="calendar-today">
+                    icon="calendar-today"
+                    v-model="targetDate"
+                >
                 </b-datepicker>
             </b-field>
         </section>
@@ -24,10 +27,6 @@
                     {{date}}
                 </div>
             </div>
-
-            <div>{{ firstDate }}</div>
-            <div>{{ lastDate }}</div>
-            <div>{{ monthlyDateList }}</div>
         </div>
     </div>
 </template>
@@ -62,12 +61,13 @@
                 }
                 const emptyList = new Array(7).slice(0, firstDateDayOfWeek);
                 monthlyDates = emptyList.concat(monthlyDates);
+                monthlyDates = monthlyDates.concat(new Array(7));
 
                 const monthlyDatesDivided = [];
                 for(let i = 0; i < lastDate.getDate(); i+=7) {
-                    monthlyDatesDivided.push(monthlyDates.slice(i, i + 7))
+                    monthlyDatesDivided.push(monthlyDates.slice(i, i + 7));
                 }
-                return monthlyDatesDivided
+                return monthlyDatesDivided;
             }
         }
     }
