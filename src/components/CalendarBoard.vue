@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <section>
             <b-field label="Select a date">
                 <b-datepicker
@@ -14,17 +14,17 @@
         <div>
             <div class="columns">
                 <div class="column">
-                    {{`${targetDate.getMonth() + 1}月`}}
+                    {{`${targetDate.getFullYear()}年${targetDate.getMonth() + 1}月`}}
                 </div>
             </div>
-            <div class="columns">
+            <div class="columns is-gapless is-mobile">
                 <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column">
                     {{dayOfWeek}}
                 </div>
             </div>
-            <div class="columns" v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
+            <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
                 <div v-for="(date, key2) in weeklyDateList" :key="key2" class="column">
-                    <CalendarElement v-if="date" v-bind="{date: date, author: 'A', title:'B'}" />
+                    <CalendarElement v-bind="{date: date, author: 'A', title:'B', holiday: isHoliday(new Date(targetDate.getFullYear(), targetDate.getMonth(), date))}" />
                 </div>
             </div>
         </div>
@@ -33,6 +33,8 @@
 
 <script>
 import CalendarElement from './CalendarElement.vue'
+import japaneseHolidays from 'japanese-holidays'
+
 export default {
     components: {
         CalendarElement
@@ -41,6 +43,21 @@ export default {
         return {
             dayOfWeeks: ["日", "月", "火", "水", "木", "金", "土"],
             targetDate: new Date(),
+        }
+    },
+    methods: {
+        isHoliday(date) {
+            let holiday = japaneseHolidays.isHoliday(date);
+            if(!holiday) {
+                const dayOfWeek = date.getDay();
+                if(dayOfWeek === 0) {
+                    return "日曜日";
+                }
+                if(dayOfWeek === 6) {
+                    return "土曜日";
+                }
+            }
+            return holiday;
         }
     },
     computed: {
@@ -76,3 +93,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.bottom0 {
+  margin-bottom: 0 !important
+}
+</style>

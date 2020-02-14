@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" v-bind:class="[date? '':'is-invisible', holiday? 'isHoliay':'']">
         <header class="card-header">
             <p class="card-header-title">
                 {{date}}
@@ -11,12 +11,13 @@
             </a>
         </header>
         <div class="card-content">
-            <div class="content">
-            {{author}}
+            <div class="is-clearfix">
+                <a class="is-pulled-left" href="#">{{author}}</a>
             </div>
-            <div class="content">
-            {{title}}
+            <div class="is-clearfix">
+                <a class="is-pulled-left" href="#">{{title}}</a>
             </div>
+            <button v-if="!author && !title" class="button is-primary">参加登録する</button>
         </div>
     </div>
 </template>
@@ -27,6 +28,13 @@ export default {
         date: Number,
         author: String,
         title: String,
+        holiday: String,
     }
 }
 </script>
+
+<style>
+.isHoliay {
+    background-color: lightgrey
+}
+</style>
