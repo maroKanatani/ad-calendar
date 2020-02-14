@@ -14,7 +14,7 @@
         <div>
             <div class="columns">
                 <div class="column">
-                    {{targetDate.getMonth() + 1}}
+                    {{`${targetDate.getMonth() + 1}月`}}
                 </div>
             </div>
             <div class="columns">
