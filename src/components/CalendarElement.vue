@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-bind:class="[date? '':'is-invisible', holiday? 'isHoliay':'']">
+    <div class="card" v-bind:class="[date? '':'is-invisible', holiday? 'isHoliday':'']">
         <header class="card-header">
             <p class="card-header-title">
                 {{date}}
@@ -28,13 +28,14 @@ export default {
         date: Number,
         author: String,
         title: String,
+        postAlsoInHoliday: Boolean,
         holiday: String,
-    }
+    },
 }
 </script>
 
 <style>
-.isHoliay {
-    background-color: lightgrey
+.isHoliday {
+    background-color: lightgrey !important
 }
 </style>

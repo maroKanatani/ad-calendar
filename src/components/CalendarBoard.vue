@@ -10,6 +10,10 @@
                 >
                 </b-datepicker>
             </b-field>
+            <label class="checkbox">
+                <input type="checkbox" v-model="postAlsoInHoliday">
+                    休日も投稿する
+            </label>
         </section>
         <div>
             <div class="columns">
@@ -24,7 +28,15 @@
             </div>
             <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
                 <div v-for="(date, key2) in weeklyDateList" :key="key2" class="column">
-                    <CalendarElement v-bind="{date: date, author: 'A', title:'B', holiday: isHoliday(new Date(targetDate.getFullYear(), targetDate.getMonth(), date))}" />
+                    <CalendarElement 
+                        v-bind="{
+                            date: date, 
+                            author: 'A', 
+                            title:'B', 
+                            postAlsoInHoliday: postAlsoInHoliday, 
+                            holiday: isHoliday(new Date(targetDate.getFullYear(), targetDate.getMonth(), date))
+                        }" 
+                    />
                 </div>
             </div>
         </div>
@@ -43,6 +55,7 @@ export default {
         return {
             dayOfWeeks: ["日", "月", "火", "水", "木", "金", "土"],
             targetDate: new Date(),
+            postAlsoInHoliday: false
         }
     },
     methods: {
