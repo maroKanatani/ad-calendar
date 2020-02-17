@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <section>
-            <b-field label="Select a date">
+            <b-field label="Select a Month">
                 <b-datepicker
                     type="month"
                     placeholder="Click to select..."
