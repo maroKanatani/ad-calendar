@@ -1,16 +1,34 @@
 const state = {
     targetMonth: new Date(),
-    postAlsoHoliday: false,
+    postAlsoInHoliday: false,
 }
 
-const getters = {}
+const getters = {
+    targetMonth(state) {
+        return state.targetMonth
+    },
+    postAlsoInHoliday(state) {
+        return state.postAlsoInHoliday
+    }
+}
 
-const actions = {}
+const actions = {
+    updatePostAlsoInHoliday({ commit }, data) {
+        console.log(data)
+        commit('setPostAlsoInHoliday', data)
+    },
+    updateTargetMonth({ commit }, data) {
+        commit('setTargetMonth', data)
+    },
+}
 
 const mutations = {
-    setPostAlsoHoliday (state, value) {
-        state.postAlsoHoliday = value
-      },    
+    setPostAlsoInHoliday(state, data) {
+        state.postAlsoInHoliday = data
+    },
+    setTargetMonth(state, data) {
+        state.targetMonth = data
+    }
 }
 
 export default {

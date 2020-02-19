@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-bind:class="[date? '':'is-invisible', holiday? 'isHoliday':'']">
+    <div class="card" v-bind:class="[date ? '':'is-invisible', postAlsoInHoliday && holiday? 'isHoliday':'']">
         <header class="card-header">
             <p class="card-header-title">
                 {{date}}
@@ -10,7 +10,7 @@
             </span>
             </a>
         </header>
-        <div class="card-content">
+        <div class="card-content"  v-bind:class="[postAlsoInHoliday && holiday? 'is-invisible': '' ]">
             <div class="is-clearfix">
                 <a class="is-pulled-left" href="#">{{author}}</a>
             </div>
@@ -28,9 +28,13 @@ export default {
         date: Number,
         author: String,
         title: String,
-        postAlsoInHoliday: Boolean,
         holiday: String,
     },
+    computed: {
+        postAlsoInHoliday() {
+            return this.$store.state.calendar.postAlsoInHoliday
+        },
+    }
 }
 </script>
 

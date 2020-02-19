@@ -6,19 +6,19 @@
                     type="month"
                     placeholder="Click to select..."
                     icon="calendar-today"
-                    v-model="targetDate"
+                    :value="targetMonth"
+                    @input="changeTargetMonth"
                 >
                 </b-datepicker>
             </b-field>
-            <label class="checkbox">
-                <input type="checkbox" v-model="postAlsoInHoliday">
-                    休日も投稿する
-            </label>
+            <div class="field">
+                <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
+            </div>
         </section>
         <div>
             <div class="columns">
                 <div class="column">
-                    {{`${targetDate.getFullYear()}年${targetDate.getMonth() + 1}月`}}
+                    {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
                 </div>
             </div>
             <div class="columns is-gapless is-mobile">
@@ -33,8 +33,7 @@
                             date: date, 
                             author: 'A', 
                             title:'B', 
-                            postAlsoInHoliday: postAlsoInHoliday, 
-                            holiday: isHoliday(new Date(targetDate.getFullYear(), targetDate.getMonth(), date))
+                            holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
                         }" 
                     />
                 </div>
@@ -54,11 +53,16 @@ export default {
     data() {
         return {
             dayOfWeeks: ["日", "月", "火", "水", "木", "金", "土"],
-            targetDate: new Date(),
-            postAlsoInHoliday: false
         }
     },
     methods: {
+        changeTargetMonth(e) {
+            this.$store.dispatch('calendar/updateTargetMonth', new Date(e.getFullYear(), e.getMonth()))
+        },
+        togglePostAlsoInHoliday(e) {
+            console.log(e)
+            this.$store.dispatch('calendar/updatePostAlsoInHoliday', e)
+        },
         isHoliday(date) {
             let holiday = japaneseHolidays.isHoliday(date);
             if(!holiday) {
@@ -71,16 +75,22 @@ export default {
                 }
             }
             return holiday;
-        }
+        },
     },
     computed: {
+        targetMonth() {
+            return this.$store.state.calendar.targetMonth
+        },
+        postAlsoInHoliday() {
+            return this.$store.state.calendar.postAlsoInHoliday
+        },
         firstDate() {
-            const date = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth());
+            const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth());
             date.setDate(1);
             return date;
         },
         lastDate() {
-            const date = new Date(this.targetDate.getFullYear(), this.targetDate.getMonth() + 1);
+            const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth() + 1);
             date.setDate(0);
             return date;
         },
