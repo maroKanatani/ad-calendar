@@ -17,7 +17,7 @@
             <div class="is-clearfix">
                 <a class="is-pulled-left" href="#">{{title}}</a>
             </div>
-            <button v-if="!author && !title" class="button is-primary">参加登録する</button>
+            <button v-if="!author && !title" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
         </div>
     </div>
 </template>
@@ -29,6 +29,11 @@ export default {
         author: String,
         title: String,
         holiday: String,
+    },
+    methods: {
+        onJoinButtonClicked() {
+            alert("hello")
+        }
     },
     computed: {
         postAlsoInHoliday() {

@@ -31,8 +31,6 @@
                     <CalendarElement 
                         v-bind="{
                             date: date, 
-                            author: 'A', 
-                            title:'B', 
                             holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
                         }" 
                     />
@@ -60,7 +58,6 @@ export default {
             this.$store.dispatch('calendar/updateTargetMonth', new Date(e.getFullYear(), e.getMonth()))
         },
         togglePostAlsoInHoliday(e) {
-            console.log(e)
             this.$store.dispatch('calendar/updatePostAlsoInHoliday', e)
         },
         isHoliday(date) {

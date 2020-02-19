@@ -14,7 +14,6 @@ const getters = {
 
 const actions = {
     updatePostAlsoInHoliday({ commit }, data) {
-        console.log(data)
         commit('setPostAlsoInHoliday', data)
     },
     updateTargetMonth({ commit }, data) {

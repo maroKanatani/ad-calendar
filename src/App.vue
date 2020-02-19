@@ -10,7 +10,7 @@ import CalendarBoard from './components/CalendarBoard.vue'
 export default {
   name: 'App',
   components: {
-    CalendarBoard
+    CalendarBoard,
   }
 }
 </script>
