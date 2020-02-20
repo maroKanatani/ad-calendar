@@ -1,25 +1,37 @@
 <template>
-    <section>
-        <button class="button is-medium is-dark" @click="prompt">
-            Launch prompt (default)
-        </button>
-    </section>
+    <form action="">
+        <div class="modal-card" style="width: auto">
+            <header class="modal-card-head">
+                <p class="modal-card-title">参加登録</p>
+            </header>
+            <section class="modal-card-body">
+                <b-field label="記事を書く人">
+                    <b-input
+                        type="text"
+                        :value="author"  
+                        placeholder="名前を入れてね"
+                        required>
+                    </b-input>
+                </b-field>
+
+                <b-field label="記事のタイトル">
+                    <b-input
+                        type="text"
+                        :value="title"
+                        placeholder="タイトルを入れてね"
+                        required>
+                    </b-input>
+                </b-field>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" type="button" @click="$parent.close()">閉じる</button>
+                <button class="button is-primary">登録</button>
+            </footer>
+        </div>
+    </form>
 </template>
 
 <script>
-    export default {
-        methods: {
-            prompt() {
-                this.$buefy.dialog.prompt({
-                    message: `What's your name?`,
-                    inputAttrs: {
-                        placeholder: 'e.g. Walter',
-                        maxlength: 10
-                    },
-                    trapFocus: true,
-                    onConfirm: (value) => this.$buefy.toast.open(`Your name is: ${value}`)
-                })
-            },
-        }
-    }
+export default {
+}
 </script>

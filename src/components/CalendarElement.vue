@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import AddScheduleDialog from './AddScheduleDialog.vue'
+
 export default {
     props: {
         date: Number,
@@ -32,8 +34,14 @@ export default {
     },
     methods: {
         onJoinButtonClicked() {
-            alert("hello")
-        }
+            this.$buefy.modal.open({
+                parent: this,
+                component: AddScheduleDialog,
+                hasModalCard: true,
+                customClass: 'custom-class custom-class-2',
+                trapFocus: true
+            })
+        },
     },
     computed: {
         postAlsoInHoliday() {
