@@ -10,7 +10,7 @@
             </span>
             </a>
         </header>
-        <div class="card-content"  v-bind:class="[postAlsoInHoliday && holiday? 'is-invisible': '' ]">
+        <div class="card-content"  v-bind:class="[(postAlsoInHoliday && holiday || (date > lastPostDate))? 'is-invisible': '' ]">
             <div class="is-clearfix">
                 <a class="is-pulled-left" href="#">{{author}}</a>
             </div>
@@ -31,6 +31,7 @@ export default {
         author: String,
         title: String,
         holiday: String,
+        lastPostDate: Number
     },
     methods: {
         onJoinButtonClicked() {

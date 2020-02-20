@@ -11,6 +11,9 @@
                 >
                 </b-datepicker>
             </b-field>
+            <b-field>
+                <b-numberinput min="1" v-bind:max="lastDate.getDate()" v-model="lastPostDate"></b-numberinput>
+            </b-field>
             <div class="field">
                 <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
             </div>
@@ -31,7 +34,8 @@
                     <CalendarElement 
                         v-bind="{
                             date: date, 
-                            holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
+                            holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
+                            lastPostDate: lastPostDate
                         }" 
                     />
                 </div>
@@ -109,6 +113,9 @@ export default {
                 monthlyDatesDivided.push(monthlyDates.slice(i, i + 7));
             }
             return monthlyDatesDivided;
+        },
+        lastPostDate() {
+            return 25;
         }
     }
 }
