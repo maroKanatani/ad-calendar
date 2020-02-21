@@ -55,6 +55,7 @@ export default {
     data() {
         return {
             dayOfWeeks: ["日", "月", "火", "水", "木", "金", "土"],
+            lastPostDate: 25
         }
     },
     methods: {
@@ -114,9 +115,6 @@ export default {
             }
             return monthlyDatesDivided;
         },
-        lastPostDate() {
-            return 25;
-        }
     }
 }
 </script>
