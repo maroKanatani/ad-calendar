@@ -1,17 +1,13 @@
 <template>
-  <div id="app">
-    <CalendarBoard />
+  <div id="app">    
+    <router-view/>
   </div>
 </template>
 
 <script>
-import CalendarBoard from './components/CalendarBoard.vue'
 
 export default {
   name: 'App',
-  components: {
-    CalendarBoard,
-  }
 }
 </script>
 
