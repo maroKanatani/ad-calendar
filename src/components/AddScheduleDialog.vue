@@ -8,8 +8,9 @@
                 <b-field label="記事を書く人">
                     <b-input
                         type="text"
-                        :value="author"  
+                        :value="author"
                         placeholder="名前を入れてね"
+                        maxlength="255"
                         required>
                     </b-input>
                 </b-field>
@@ -19,6 +20,7 @@
                         type="text"
                         :value="title"
                         placeholder="タイトルを入れてね"
+                        maxlength="255"
                         required>
                     </b-input>
                 </b-field>
