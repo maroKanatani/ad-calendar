@@ -1,14 +1,14 @@
 <template>
 <div>
     <div class="columns is-mobile">
-        <div class="column is-full">
+        <div class="column is-half">
             <b-field label="カレンダーのタイトル">
                 <b-input size="is-large" v-model="calendarTitle" required></b-input>
             </b-field>
         </div>
     </div>
     <div class="columns is-mobile">
-        <div class="column is-half">
+        <div class="column is-one-fifth">
             <b-field label="対象月">
                 <b-datepicker
                     type="month"
@@ -16,19 +16,21 @@
                     icon="calendar-alt"
                     :value="targetMonth"
                     @input="changeTargetMonth"
+                    size="is-medium"
                 >
                 </b-datepicker>
             </b-field>
         </div>
     </div>
     <div class="columns is-mobile">
-        <div class="column is-half">
+        <div class="column is-one-fifth">
             <b-field label="何日まで投稿するか">
                 <b-numberinput
                     min="1" 
                     v-bind:max="lastDate.getDate()" 
                     :value="lastPostDate" 
                     @input="changeLastPostDate"
+                    size="is-medium"
                 >
                 </b-numberinput>
             </b-field>

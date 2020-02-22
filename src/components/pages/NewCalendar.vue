@@ -1,5 +1,12 @@
 <template>
+<div>
+    <Navbar />
     <div class="container">
+        <div class="columns">
+            <div class="column page-title is-full is-size-1">
+                カレンダーを作る
+            </div>
+        </div>
         <NewCalendarSetting v-bind="{
             calendarTitle: calendarTitle,
             targetMonth: targetMonth,
@@ -23,16 +30,22 @@
             </div>
         </div>
     </div>
+    <Footer />
+</div>
 </template>
 
 <script>
+import Navbar from '@/components/globals/Navbar'
 import NewCalendarSetting from '@/components/parts/NewCalendarSetting'
 import CalendarBoard from '@/components/parts/CalendarBoard'
+import Footer from '@/components/globals/Footer'
 
 export default {
     components: {
-        CalendarBoard,
+        Navbar,
         NewCalendarSetting,
+        CalendarBoard,
+        Footer,
     },
     data() {
         return {
@@ -78,7 +91,10 @@ export default {
 .button-area {
     padding: 30px
 }
-.container{
+.container {
     width: fit-content
+}
+.page-title {
+    padding-top: 2rem
 }
 </style>

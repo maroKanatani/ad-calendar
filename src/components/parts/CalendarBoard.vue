@@ -1,5 +1,5 @@
 <template>
-    <div id="root">
+    <div class="root">
         <div class="columns">
             <div class="column is-size-3 has-text-centered">
                 {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
@@ -93,7 +93,7 @@ export default {
 </script>
 
 <style>
-#root {
+.root {
     width: fit-content
 }
 .bottom0 {
