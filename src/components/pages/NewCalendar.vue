@@ -21,13 +21,17 @@
                 <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
             </div>
         </section>
-        <CalendarBoard v-bind:targetMonth="targetMonth" v-bind:lastPostDate="lastPostDate" />
+        <CalendarBoard v-bind="{
+            targetMonth: targetMonth, 
+            lastPostDate: lastPostDate, 
+            firstDate: firstDate, 
+            lastDate: lastDate}"
+        />
     </div>
 </template>
 
 <script>
 import CalendarBoard from '@/components/parts/CalendarBoard'
-import japaneseHolidays from 'japanese-holidays'
 
 export default {
     components: {
@@ -44,19 +48,6 @@ export default {
         },
         togglePostAlsoInHoliday(e) {
             this.$store.dispatch('calendar/updatePostAlsoInHoliday', e)
-        },
-        isHoliday(date) {
-            let holiday = japaneseHolidays.isHoliday(date);
-            if(!holiday) {
-                const dayOfWeek = date.getDay();
-                if(dayOfWeek === 0) {
-                    return "日曜日";
-                }
-                if(dayOfWeek === 6) {
-                    return "土曜日";
-                }
-            }
-            return holiday;
         },
     },
     computed: {
@@ -75,25 +66,6 @@ export default {
             const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth() + 1);
             date.setDate(0);
             return date;
-        },
-        monthlyDateList() {
-            const firstDate = this.firstDate;
-            const lastDate = this.lastDate;
-            const firstDateDayOfWeek = firstDate.getDay();
-
-            let monthlyDates = [];
-            for(let i = firstDate.getDate(); i <= lastDate.getDate(); i++) {
-                monthlyDates.push(i);
-            }
-            const emptyList = new Array(7).slice(0, firstDateDayOfWeek);
-            monthlyDates = emptyList.concat(monthlyDates);
-            monthlyDates = monthlyDates.concat(new Array(7));
-
-            const monthlyDatesDivided = [];
-            for(let i = 0; i < lastDate.getDate(); i+=7) {
-                monthlyDatesDivided.push(monthlyDates.slice(i, i + 7));
-            }
-            return monthlyDatesDivided;
         },
     }
 }

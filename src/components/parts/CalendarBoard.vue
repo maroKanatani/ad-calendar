@@ -35,6 +35,8 @@ export default {
     props: {
         targetMonth: Date,
         lastPostDate: Number,
+        firstDate: Date,
+        lastDate: Date,
     },
     data() {
         return {
@@ -57,16 +59,6 @@ export default {
         },
     },
     computed: {
-        firstDate() {
-            const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth());
-            date.setDate(1);
-            return date;
-        },
-        lastDate() {
-            const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth() + 1);
-            date.setDate(0);
-            return date;
-        },
         monthlyDateList() {
             const firstDate = this.firstDate;
             const lastDate = this.lastDate;
