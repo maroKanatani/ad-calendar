@@ -1,45 +1,55 @@
 <template>
+<div>
+    <Navbar />
     <div class="container">
-        <section>
-            <b-field label="カレンダーのタイトル">
-                <b-input size="is-large" v-model="name" required></b-input>
-            </b-field>
-            <b-field label="対象月">
-                <b-datepicker
-                    type="month"
-                    placeholder="Click to select..."
-                    icon="calendar-today"
-                    :value="targetMonth"
-                    @input="changeTargetMonth"
-                >
-                </b-datepicker>
-            </b-field>
-            <b-field label="何日まで投稿するか">
-                <b-numberinput min="1" v-bind:max="lastDate.getDate()" v-model="lastPostDate"></b-numberinput>
-            </b-field>
-            <div class="field">
-                <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
+        <div class="columns">
+            <div class="column page-title is-full is-size-1">
+                カレンダーを作る
             </div>
-        </section>
+        </div>
+        <NewCalendarSetting v-bind="{
+            calendarTitle: calendarTitle,
+            targetMonth: targetMonth,
+            changeTargetMonth: changeTargetMonth,
+            lastPostDate: lastPostDate,
+            changeLastPostDate: changeLastPostDate,
+            lastDate: lastDate,
+            postAlsoInHoliday: postAlsoInHoliday,
+            togglePostAlsoInHoliday: togglePostAlsoInHoliday,
+        }"/>
         <CalendarBoard v-bind="{
             targetMonth: targetMonth, 
             lastPostDate: lastPostDate, 
             firstDate: firstDate, 
-            lastDate: lastDate}"
-        />
+            lastDate: lastDate,
+            postAlsoInHoliday: postAlsoInHoliday,
+        }"/>
+        <div class="columns">
+            <div class="column is-full has-text-centered button-area">
+                <b-button type="is-primary">カレンダーを登録する</b-button>
+            </div>
+        </div>
     </div>
+    <Footer />
+</div>
 </template>
 
 <script>
+import Navbar from '@/components/globals/Navbar'
+import NewCalendarSetting from '@/components/parts/NewCalendarSetting'
 import CalendarBoard from '@/components/parts/CalendarBoard'
+import Footer from '@/components/globals/Footer'
 
 export default {
     components: {
+        Navbar,
+        NewCalendarSetting,
         CalendarBoard,
+        Footer,
     },
     data() {
         return {
-            lastPostDate: 25,
+            calendarTitle: "",
         }
     },
     methods: {
@@ -49,6 +59,9 @@ export default {
         togglePostAlsoInHoliday(e) {
             this.$store.dispatch('calendar/updatePostAlsoInHoliday', e)
         },
+        changeLastPostDate(e) {
+            this.$store.dispatch('calendar/updateLastPostDate', e)
+        }
     },
     computed: {
         targetMonth() {
@@ -67,6 +80,21 @@ export default {
             date.setDate(0);
             return date;
         },
+        lastPostDate() {
+            return this.$store.state.calendar.lastPostDate
+        },
     }
 }
 </script>
+
+<style scoped>
+.button-area {
+    padding: 30px
+}
+.container {
+    width: fit-content
+}
+.page-title {
+    padding-top: 2rem
+}
+</style>

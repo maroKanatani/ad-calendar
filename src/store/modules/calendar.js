@@ -1,6 +1,7 @@
 const state = {
     targetMonth: new Date(),
     postAlsoInHoliday: false,
+    lastPostDate: 25,
 }
 
 const getters = {
@@ -9,6 +10,9 @@ const getters = {
     },
     postAlsoInHoliday(state) {
         return state.postAlsoInHoliday
+    },
+    lastPostDate(state) {
+        return state.lastPostDate
     }
 }
 
@@ -19,6 +23,9 @@ const actions = {
     updateTargetMonth({ commit }, data) {
         commit('setTargetMonth', data)
     },
+    updateLastPostDate({ commit }, data) {
+        commit('setLastPostDate', data)
+    }
 }
 
 const mutations = {
@@ -27,6 +34,9 @@ const mutations = {
     },
     setTargetMonth(state, data) {
         state.targetMonth = data
+    },
+    setLastPostDate(state, data) {
+        state.lastPostDate = data
     }
 }
 
