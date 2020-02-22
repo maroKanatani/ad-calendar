@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="columns is-mobile">
-        <div class="field">
+        <div class="column is-half field">
             <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
         </div>
     </div>
