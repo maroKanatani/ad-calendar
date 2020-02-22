@@ -4,11 +4,6 @@
             <p class="card-header-title">
                 {{date}}
             </p>
-            <a href="#" class="card-header-icon" aria-label="more options">
-            <span class="icon">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-            </a>
         </header>
         <div class="card-content"  v-bind:class="[(postAlsoInHoliday && holiday || (date > lastPostDate))? 'is-invisible': '' ]">
             <div class="is-clearfix">
