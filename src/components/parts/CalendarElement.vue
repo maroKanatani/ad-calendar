@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import AddScheduleDialog from './AddScheduleDialog.vue'
+import AddScheduleDialog from '@/components/AddScheduleDialog.vue'
 
 export default {
     props: {

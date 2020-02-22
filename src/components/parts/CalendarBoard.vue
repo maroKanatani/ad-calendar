@@ -1,50 +1,47 @@
 <template>
-    <div class="container">
-        <section>
-            <b-field label="カレンダーのタイトル">
-                <b-input size="is-large" v-model="name" required></b-input>
-            </b-field>
-            <b-field label="対象月">
-                <b-datepicker
-                    type="month"
-                    placeholder="Click to select..."
-                    icon="calendar-today"
-                    :value="targetMonth"
-                    @input="changeTargetMonth"
-                >
-                </b-datepicker>
-            </b-field>
-            <b-field label="何日まで投稿するか">
-                <b-numberinput min="1" v-bind:max="lastDate.getDate()" v-model="lastPostDate"></b-numberinput>
-            </b-field>
-            <div class="field">
-                <b-checkbox :value="postAlsoInHoliday" @input="togglePostAlsoInHoliday">休日も投稿する</b-checkbox>
+    <div>
+        <div class="columns">
+            <div class="column">
+                {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
             </div>
-        </section>
-        <CalendarBoard v-bind:targetMonth="targetMonth" v-bind:lastPostDate="lastPostDate" />
+        </div>
+        <div class="columns is-gapless is-mobile">
+            <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column">
+                {{dayOfWeek}}
+            </div>
+        </div>
+        <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
+            <div v-for="(date, key2) in weeklyDateList" :key="key2" class="column">
+                <CalendarElement 
+                    v-bind="{
+                        date: date, 
+                        holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
+                        lastPostDate: lastPostDate
+                    }" 
+                />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import CalendarBoard from '@/components/parts/CalendarBoard'
+import CalendarElement from './CalendarElement.vue'
 import japaneseHolidays from 'japanese-holidays'
 
 export default {
     components: {
-        CalendarBoard,
+        CalendarElement
+    },
+    props: {
+        targetMonth: Date,
+        lastPostDate: Number,
     },
     data() {
         return {
-            lastPostDate: 25,
+            dayOfWeeks: ["日", "月", "火", "水", "木", "金", "土"],
         }
     },
     methods: {
-        changeTargetMonth(e) {
-            this.$store.dispatch('calendar/updateTargetMonth', new Date(e.getFullYear(), e.getMonth()))
-        },
-        togglePostAlsoInHoliday(e) {
-            this.$store.dispatch('calendar/updatePostAlsoInHoliday', e)
-        },
         isHoliday(date) {
             let holiday = japaneseHolidays.isHoliday(date);
             if(!holiday) {
@@ -60,12 +57,6 @@ export default {
         },
     },
     computed: {
-        targetMonth() {
-            return this.$store.state.calendar.targetMonth
-        },
-        postAlsoInHoliday() {
-            return this.$store.state.calendar.postAlsoInHoliday
-        },
         firstDate() {
             const date = new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth());
             date.setDate(1);
@@ -98,3 +89,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.bottom0 {
+  margin-bottom: 0 !important
+}
+</style>
