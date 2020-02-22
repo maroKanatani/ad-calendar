@@ -13,7 +13,7 @@
                 <b-datepicker
                     type="month"
                     placeholder="Click to select..."
-                    icon="calendar-today"
+                    icon="calendar-alt"
                     :value="targetMonth"
                     @input="changeTargetMonth"
                 >
