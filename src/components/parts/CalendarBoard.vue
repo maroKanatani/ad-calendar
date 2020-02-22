@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div id="root">
         <div class="columns">
-            <div class="column">
+            <div class="column is-size-3 has-text-centered">
                 {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
             </div>
         </div>
-        <div class="columns is-gapless is-mobile">
-            <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column">
+        <div class="columns is-gapless is-size-5 is-mobile bottom0">
+            <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column has-text-centered table-column">
                 {{dayOfWeek}}
             </div>
         </div>
         <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
-            <div v-for="(date, key2) in weeklyDateList" :key="key2" class="column">
+            <div v-for="(date, key2) in weeklyDateList" :key="key2" class="column table-column">
                 <CalendarElement 
                     v-bind="{
                         date: date, 
@@ -93,7 +93,13 @@ export default {
 </script>
 
 <style>
+#root {
+    width: fit-content
+}
 .bottom0 {
   margin-bottom: 0 !important
+}
+.table-column {
+    border: 1px solid lightgrey;
 }
 </style>
