@@ -15,8 +15,7 @@
                 <CalendarElement 
                     v-bind="{
                         date: date, 
-                        holiday: isHoliday(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
-                        lastPostDate: lastPostDate
+                        isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
                     }" 
                 />
             </div>
@@ -37,6 +36,7 @@ export default {
         lastPostDate: Number,
         firstDate: Date,
         lastDate: Date,
+        postAlsoInHoliday: Boolean,
     },
     data() {
         return {
@@ -57,6 +57,16 @@ export default {
             }
             return holiday;
         },
+        isPostDate(date) {
+            const isOverPostDate = date.getDate() > this.lastPostDate
+            if(isOverPostDate) {
+                return false
+            }
+            if(!this.postAlsoInHoliday && this.isHoliday(date)) {
+                return false
+            }
+            return true
+        }
     },
     computed: {
         monthlyDateList() {

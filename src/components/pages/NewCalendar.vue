@@ -14,8 +14,9 @@
             targetMonth: targetMonth, 
             lastPostDate: lastPostDate, 
             firstDate: firstDate, 
-            lastDate: lastDate}"
-        />
+            lastDate: lastDate,
+            postAlsoInHoliday: postAlsoInHoliday,
+        }"/>
         <div class="columns">
             <div class="column is-full has-text-centered button-area">
                 <b-button type="is-primary">カレンダーを登録する</b-button>
