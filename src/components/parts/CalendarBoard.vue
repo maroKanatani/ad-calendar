@@ -15,7 +15,8 @@
                 <CalendarElement 
                     v-bind="{
                         date: date, 
-                        isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
+                        isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
+                        schedule: findSchedule(date)
                     }" 
                 />
             </div>
@@ -37,6 +38,7 @@ export default {
         firstDate: Date,
         lastDate: Date,
         postAlsoInHoliday: Boolean,
+        schedules: Array,
     },
     data() {
         return {
@@ -66,6 +68,20 @@ export default {
                 return false
             }
             return true
+        },
+        findSchedule(date) {
+            const emptySchedule = {
+                article_title: '', 
+                author: ''
+            }
+            if(!this.schedules) {
+                return emptySchedule
+            }
+            const filteredSchedule = this.schedules.filter(s => s.post_date.toDate().getDate() === date);
+            if(filteredSchedule.length < 1) {
+                return emptySchedule
+            }
+            return filteredSchedule[0];
         }
     },
     computed: {

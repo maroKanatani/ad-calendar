@@ -5,8 +5,6 @@ import 'buefy/dist/buefy.css'
 import store from '@/store'
 import router from '@/router'
 
-
-
 Vue.use(Buefy, {
   defaultIconPack: 'fa',
 })

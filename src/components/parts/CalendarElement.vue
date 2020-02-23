@@ -8,12 +8,12 @@
         </header>
         <div class="card-content"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
             <div class="is-clearfix">
-                <a class="is-pulled-left" href="#">{{author}}</a>
+                <a class="is-pulled-left" href="#">{{schedule.author}}</a>
             </div>
             <div class="is-clearfix">
-                <a class="is-pulled-left" href="#">{{title}}</a>
+                <a class="is-pulled-left" href="#">{{schedule.article_title}}</a>
             </div>
-            <button v-if="!author && !title" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
+            <button v-if="!schedule.author && !schedule.article_title" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
         </div>
     </div>
 </template>
@@ -28,6 +28,7 @@ export default {
         author: String,
         title: String,
         isPostDate: Boolean,
+        schedule: Object,
     },
     data() {
         return {
