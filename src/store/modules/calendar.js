@@ -3,6 +3,7 @@ const state = {
     postAlsoInHoliday: false,
     lastPostDate: 25,
     calendarTitle: "",
+    isLoading: false,
 }
 
 const getters = {
@@ -18,6 +19,9 @@ const getters = {
     calendarTitle(state) {
         return state.calendarTitle
     },
+    isLoading(state) {
+        return state.isLoading
+    },
 }
 
 const actions = {
@@ -32,6 +36,9 @@ const actions = {
     },
     updateCalendarTitle({ commit }, data) {
         commit('setCalendarTitle', data)
+    },
+    updateLoading({ commit }, data) {
+        commit('setLoading', data)
     }
 }
 
@@ -47,6 +54,9 @@ const mutations = {
     },
     setCalendarTitle(state, data) {
         state.calendarTitle = data
+    },
+    setLoading(state, data) {
+        state.isLoading = data
     }
 }
 

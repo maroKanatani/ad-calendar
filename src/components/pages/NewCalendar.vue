@@ -17,7 +17,7 @@
         }"/>
         <div class="columns">
             <div class="column is-full has-text-centered button-area">
-                <b-button @click="addCalendar" type="is-primary">カレンダーを登録する</b-button>
+                <b-button @click="onAddButtonClicked" type="is-primary">カレンダーを登録する</b-button>
             </div>
         </div>
     </div>
@@ -30,6 +30,7 @@ import Navbar from '@/components/globals/Navbar'
 import NewCalendarSetting from '@/components/parts/NewCalendarSetting'
 import CalendarBoard from '@/components/parts/CalendarBoard'
 import Footer from '@/components/globals/Footer'
+import AddCalendarDialog from '@/components/parts/AddCalendarDialog'
 import db from '@/firebase/firebaseInit'
 import firebase from 'firebase'
 
@@ -55,7 +56,6 @@ export default {
         },
         addCalendar() {
             const settings = this.calendarSettings
-
             console.log(this.calendarSettings)
             const ref = db.collection('calendars').doc()
             ref.set({
@@ -65,8 +65,22 @@ export default {
                 post_until: settings.lastPostDate,
                 schedules: [],
             })
-            console.log(ref)
-        }
+            return ref.id
+        },
+        onAddButtonClicked() {
+            if(this.calendarTitle === "") {
+                alert("カレンダーのタイトルが未入力です")
+                return ;
+            }
+            this.$buefy.modal.open({
+                parent: this,
+                component: AddCalendarDialog,
+                hasModalCard: true,
+                customClass: 'custom-class custom-class-2',
+                trapFocus: true,
+                props: {...this.calendarSettings, addCalendar: this.addCalendar}
+            })
+        },
     },
     computed: {
         calendarTitle() {
