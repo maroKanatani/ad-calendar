@@ -16,7 +16,8 @@
                     v-bind="{
                         date: date, 
                         isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
-                        schedule: findSchedule(date)
+                        schedule: findSchedule(date),
+                        addSchedule: addSchedule
                     }" 
                 />
             </div>
@@ -39,6 +40,7 @@ export default {
         lastDate: Date,
         postAlsoInHoliday: Boolean,
         schedules: Array,
+        addSchedule: Function,
     },
     data() {
         return {

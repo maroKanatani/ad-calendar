@@ -1,5 +1,5 @@
 <template>
-    <div class="card" 
+    <div class="card calendar-element" 
          v-bind:class="[date ? '':'is-invisible', !isPostDate ? 'isHoliday':'']">
         <header class="card-header" v-bind:class="[isPostDate ? 'post-date':'' ]">
             <p class="card-header-title">
@@ -8,10 +8,12 @@
         </header>
         <div class="card-content"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
             <div class="is-clearfix">
-                <a class="is-pulled-left" href="#">{{schedule.author}}</a>
+                <a class="is-pulled-left" v-if="schedule.author_url" :href="schedule.author_url">{{schedule.author}}</a>
+                <div v-else>{{schedule.author}}</div>
             </div>
             <div class="is-clearfix">
-                <a class="is-pulled-left" href="#">{{schedule.article_title}}</a>
+                <a class="is-pulled-left" v-if="schedule.article_url" :href="schedule.article_url">{{schedule.article_title}}</a>
+                <div v-else>{{schedule.article_title}}</div>
             </div>
             <button v-if="!schedule.author && !schedule.article_title" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
         </div>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import AddScheduleDialog from '@/components/AddScheduleDialog'
+import AddScheduleDialog from '@/components/parts/AddScheduleDialog'
 import { NEW_CALENDAR } from '@/router/pathStrings'
 
 export default {
@@ -29,6 +31,7 @@ export default {
         title: String,
         isPostDate: Boolean,
         schedule: Object,
+        addSchedule: Function,
     },
     data() {
         return {
@@ -42,7 +45,11 @@ export default {
                 component: AddScheduleDialog,
                 hasModalCard: true,
                 customClass: 'custom-class custom-class-2',
-                trapFocus: true
+                trapFocus: true,
+                props: {
+                    date: this.date,
+                    addSchedule: this.addSchedule
+                }
             })
         },
     },
@@ -55,5 +62,9 @@ export default {
 }
 .post-date{
     background-color: #f3ce96
+}
+.calendar-element {
+    height: 100%;
+    word-break: break-all;
 }
 </style>

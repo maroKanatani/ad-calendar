@@ -13,10 +13,9 @@
             firstDate: firstDate, 
             lastDate: lastDate,
             postAlsoInHoliday: postAlsoInHoliday,
-            schedules: schedules
+            schedules: schedules,
+            addSchedule: addSchedule,
         }"/>
-        <button v-on:click="getCalendar">aaa</button>
-        <button v-on:click="checl">aaa</button>
     </div>
     <Footer />
 </div>
@@ -27,6 +26,7 @@ import Navbar from '@/components/globals/Navbar'
 import CalendarBoard from '@/components/parts/CalendarBoard'
 import Footer from '@/components/globals/Footer'
 import db from '@/firebase/firebaseInit'
+import firebase from 'firebase'
 
 export default {
     components: {
@@ -35,23 +35,22 @@ export default {
         Footer,
     },
     data() {
+        const calendarId = this.$route.params.id
         return {
             calendarTitle: "",
-            targetMonth: new Date(2020, 2, 1),
+            targetMonth: new Date(),
             lastPostDate: 25,
             postAlsoInHoliday: false,
             schedules: [],
+            calendarId: calendarId
         }
     },
     methods: {
-        getCalendar() { 
-            const calendarId = this.$route.params.id
-            const calendarRef = db.collection("calendars").doc(calendarId);
+        getCalendar() {  
+            const calendarRef = db.collection("calendars").doc(this.calendarId);
             calendarRef.get().then(doc => {
                 if(doc.exists) {
-                    console.log(doc.id)
                     const calendarData = doc.data();
-                    console.log(calendarData)
                     this.calendarTitle = calendarData.name
                     this.postAlsoInHoliday = calendarData.post_also_in_holiday
                     this.lastPostDate = calendarData.post_until
@@ -62,10 +61,18 @@ export default {
                 }
             })
         },
-        checl() {
-            console.log(this.targetMonth)
-            console.log(typeof(this.targetMonth))
-            console.log(this.$route.params.id)
+        addSchedule(date, author, authorUrl, articleTitle, articleUrl) {
+            const calendarRef = db.collection("calendars").doc(this.calendarId)
+            calendarRef.update({
+                schedules: firebase.firestore.FieldValue.arrayUnion({
+                    article_title: articleTitle,
+                    article_url: articleUrl,
+                    author: author,
+                    author_url: authorUrl,
+                    post_date: firebase.firestore.Timestamp.fromDate(new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth(), date))
+                })
+            })
+            
         }
     },
     computed: {
@@ -79,6 +86,9 @@ export default {
             date.setDate(0);
             return date;
         },
+    },
+    mounted() {
+        this.getCalendar()
     }
 }
 </script>
