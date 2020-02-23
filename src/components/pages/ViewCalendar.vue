@@ -45,7 +45,8 @@ export default {
     },
     methods: {
         getCalendar() { 
-            const calendarRef = db.collection("calendars").doc('mRZabLIs1YGQvINzEUHO');
+            const calendarId = this.$route.params.id
+            const calendarRef = db.collection("calendars").doc(calendarId);
             calendarRef.get().then(doc => {
                 if(doc.exists) {
                     console.log(doc.id)
@@ -64,6 +65,7 @@ export default {
         checl() {
             console.log(this.targetMonth)
             console.log(typeof(this.targetMonth))
+            console.log(this.$route.params.id)
         }
     },
     computed: {

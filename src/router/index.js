@@ -21,9 +21,14 @@ export default new Router({
       component: NewCalendar
     },
     {
-      path: VIEW_CALENDAR,
+      path: `${VIEW_CALENDAR}/:id`,
       name: 'ViewCalendar',
       component: ViewCalendar
+    },
+    {
+      path: '*',
+      name: 'Not Found',
+     // component
     }
   ]
 })

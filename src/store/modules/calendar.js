@@ -2,6 +2,7 @@ const state = {
     targetMonth: new Date(),
     postAlsoInHoliday: false,
     lastPostDate: 25,
+    calendarTitle: "",
 }
 
 const getters = {
@@ -13,7 +14,10 @@ const getters = {
     },
     lastPostDate(state) {
         return state.lastPostDate
-    }
+    },
+    calendarTitle(state) {
+        return state.calendarTitle
+    },
 }
 
 const actions = {
@@ -25,6 +29,9 @@ const actions = {
     },
     updateLastPostDate({ commit }, data) {
         commit('setLastPostDate', data)
+    },
+    updateCalendarTitle({ commit }, data) {
+        commit('setCalendarTitle', data)
     }
 }
 
@@ -37,6 +44,9 @@ const mutations = {
     },
     setLastPostDate(state, data) {
         state.lastPostDate = data
+    },
+    setCalendarTitle(state, data) {
+        state.calendarTitle = data
     }
 }
 

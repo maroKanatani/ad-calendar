@@ -3,7 +3,7 @@
     <div class="columns is-mobile">
         <div class="column is-half">
             <b-field label="カレンダーのタイトル">
-                <b-input size="is-large" v-model="calendarTitle" required></b-input>
+                <b-input size="is-large" :value="calendarTitle" @input="inputCalendarTitle" required></b-input>
             </b-field>
         </div>
     </div>
@@ -48,6 +48,7 @@
 export default {
     props: {
         calendarTitle: String,
+        inputCalendarTitle: Function,
         targetMonth: Date,
         changeTargetMonth: Function,
         lastPostDate: Number,
