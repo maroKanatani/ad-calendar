@@ -14,11 +14,11 @@
                         required>
                     </b-input>
                 </b-field>
-                <b-field label="記事を書く人のリンク">
+                <b-field label="記事を書く人のURL">
                     <b-input
                         type="url"
                         v-model="authorUrl"
-                        placeholder="投稿者のリンクを貼れます"
+                        placeholder="投稿者のURLを貼れます"
                     >
                     </b-input>
                 </b-field>
@@ -32,11 +32,11 @@
                         required>
                     </b-input>
                 </b-field>
-                <b-field label="記事のタイトル">
+                <b-field label="記事のURL">
                     <b-input
                         type="url"
                         v-model="articleUrl"
-                        placeholder="記事のリンクを貼れます"
+                        placeholder="記事のURLを貼れます"
                     >
                     </b-input>
                 </b-field>
@@ -64,10 +64,14 @@ export default {
         }
     },
     methods: {
-        onRegisterButtonClicked() {
-            console.log(this.date, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
-            this.addSchedule(this.date, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
-        }
+        async onRegisterButtonClicked() {
+            await this.addSchedule(this.date, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
+            this.$parent.close()
+            this.reload()
+        },
+        reload() {
+            this.$router.go({path: this.$router.currentRoute.path, force: true});
+        },
     }
 }
 </script>

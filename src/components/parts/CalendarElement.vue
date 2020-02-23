@@ -6,7 +6,7 @@
                 {{date}}
             </p>
         </header>
-        <div class="card-content"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
+        <div class="card-content card-content-element"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
             <div class="is-clearfix">
                 <a class="is-pulled-left" v-if="schedule.author_url" :href="schedule.author_url">{{schedule.author}}</a>
                 <div v-else>{{schedule.author}}</div>
@@ -66,5 +66,9 @@ export default {
 .calendar-element {
     height: 100%;
     word-break: break-all;
+}
+.card-content-element {
+    padding: 0.75rem;
+    height: 10rem;
 }
 </style>
