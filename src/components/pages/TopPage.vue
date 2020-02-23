@@ -1,6 +1,6 @@
 <template>
     <div class="has-text-white">
-        <section class="hero is-primary is-large">
+        <section class="hero is-primary is-fullheight">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title is-size-1">
@@ -15,8 +15,7 @@
                         そんなアドベントカレンダーをいつでも、気軽に作れるようにしてみました。
                         </p>
                     </div>
-                    
-                    <router-link class="has-text-white" to="/new-calendar" exact>さっそくカレンダーを作ってみる</router-link>
+                    <router-link class="button is-primary is-outlined is-inverted" to="/new-calendar" exact>さっそくカレンダーを作ってみる</router-link>
                 </div>
             </div>
             <Footer class="hero-foot" />
