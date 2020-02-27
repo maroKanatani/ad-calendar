@@ -9,6 +9,11 @@
                 カレンダーを作成しました。<br>
                 <router-link :to="`/view-calendar/${id}`" rel="noopener" target="_blank">閲覧専用カレンダー</router-link><br>
                 <router-link :to="`/view-calendar/${id}/${editKey}`" rel="noopener" target="_blank">参加登録可能カレンダー</router-link>
+                <b-field label="共有">
+                    <b-input type="textarea"
+                    :value="`【閲覧専用URL】\n${readOnlyUrl}\n【編集可能URL】\n${editableUrl}`">
+                    </b-input>
+                </b-field>
             </template>
             <template v-else>
                 <b-field label="カレンダーのタイトル">
@@ -58,7 +63,13 @@ export default {
     computed: {
         hasId() {
             return this.id !== ""
-        }
+        },
+        readOnlyUrl() {
+            return `${location.origin}/${this.id}`
+        },
+        editableUrl() {
+            return `${location.origin}/${this.id}/${this.editKey}` 
+        },
     }
 }
 </script>
