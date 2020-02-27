@@ -7,7 +7,7 @@
         <section class="modal-card-body">
             <template v-if="hasId">
                 カレンダーを作成しました。<br>
-                <router-link :to="`/view-calendar/${id}`" rel="noopener" target="_blank">閲覧専用カレンダー</router-link>
+                <router-link :to="`/view-calendar/${id}`" rel="noopener" target="_blank">閲覧専用カレンダー</router-link><br>
                 <router-link :to="`/view-calendar/${id}/${editKey}`" rel="noopener" target="_blank">参加登録可能カレンダー</router-link>
             </template>
             <template v-else>
