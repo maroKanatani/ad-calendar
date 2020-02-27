@@ -127,7 +127,7 @@ export default {
     padding: 30px
 }
 .container {
-    width: fit-content
+    width: 100%
 }
 .page-title {
     padding-top: 2rem

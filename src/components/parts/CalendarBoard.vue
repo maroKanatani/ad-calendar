@@ -7,7 +7,7 @@
         </div>
         <div class="columns is-gapless is-size-5 is-mobile bottom0">
             <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column has-text-centered table-column">
-                {{dayOfWeek}}
+                <div class="week">{{dayOfWeek}}</div>
             </div>
         </div>
         <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
@@ -114,12 +114,17 @@ export default {
 
 <style>
 .board {
-    width: fit-content
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 .bottom0 {
   margin-bottom: 0 !important
 }
 .table-column {
     border: 1px solid lightgrey;
+}
+.week {
+    width: 9rem
 }
 </style>
