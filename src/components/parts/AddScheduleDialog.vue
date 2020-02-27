@@ -67,10 +67,6 @@ export default {
         async onRegisterButtonClicked() {
             await this.addSchedule(this.date, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
             this.$parent.close()
-            this.reload()
-        },
-        reload() {
-            this.$router.go({path: this.$router.currentRoute.path, force: true});
         },
     }
 }

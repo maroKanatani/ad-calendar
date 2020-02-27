@@ -59,27 +59,43 @@ export default {
                     this.postAlsoInHoliday = calendarData.post_also_in_holiday
                     this.lastPostDate = calendarData.post_until
                     this.targetMonth = calendarData.month.toDate()
-                    this.schedules = calendarData.schedules
-                    this.calendarEditKey = calendarData.editKey
-                    console.log(this.calendarEditKey)
-                    console.log(this.inputEditKey)
+                    
+                    this.calendarEditKey = calendarData.edit_key
+                    this.getSchedules()
                 } else {
                     console.log("No data")
                 }
             })
         },
+        getSchedules() {
+            let scheduleResult = []
+            const schedulesRef = db.collection("schedules").where("calendar_id", "==", this.calendarId)
+            schedulesRef.get().then(querySnapshot => {
+
+                querySnapshot.forEach(doc => {
+                    if(doc.exists) {
+                        const scheduleData = doc.data()
+                        scheduleResult.push(scheduleData)
+                    } else {
+                        console.log("No schedules")
+                    }
+                })
+
+            })
+            this.schedules = scheduleResult
+        },
         addSchedule(date, author, authorUrl, articleTitle, articleUrl) {
-            const calendarRef = db.collection("calendars").doc(this.calendarId)
-            calendarRef.update({
-                schedules: firebase.firestore.FieldValue.arrayUnion({
+            const ref = db.collection('schedules').doc()
+            ref.set({
                     article_title: articleTitle,
                     article_url: articleUrl,
                     author: author,
                     author_url: authorUrl,
-                    post_date: firebase.firestore.Timestamp.fromDate(new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth(), date))
-                })
+                    calendar_id: this.calendarId,
+                    post_date: firebase.firestore.Timestamp.fromDate(new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth(), date)),
+                    created_at: firebase.firestore.Timestamp.fromDate(new Date()),
             })
-            
+            this.getCalendar()
         }
     },
     computed: {

@@ -33,6 +33,7 @@ import Footer from '@/components/globals/Footer'
 import AddCalendarDialog from '@/components/parts/AddCalendarDialog'
 import db from '@/firebase/firebaseInit'
 import firebase from 'firebase'
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     components: {
@@ -56,16 +57,17 @@ export default {
         },
         addCalendar() {
             const settings = this.calendarSettings
-            console.log(this.calendarSettings)
+            const editKey = uuidv4()
             const ref = db.collection('calendars').doc()
             ref.set({
                 month: firebase.firestore.Timestamp.fromDate(settings.targetMonth),
                 name: settings.calendarTitle,
                 post_also_in_holiday: settings.postAlsoInHoliday,
                 post_until: settings.lastPostDate,
-                schedules: [],
+                edit_key: editKey,
+                created_at: firebase.firestore.Timestamp.fromDate(new Date()),
             })
-            return ref.id
+            return {id: ref.id, editKey: editKey}
         },
         onAddButtonClicked() {
             if(this.calendarTitle === "") {

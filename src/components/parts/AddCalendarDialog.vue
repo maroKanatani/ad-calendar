@@ -7,7 +7,8 @@
         <section class="modal-card-body">
             <template v-if="hasId">
                 カレンダーを作成しました。<br>
-                <router-link :to="`/view-calendar/${id}`" rel="noopener" target="_blank">カレンダーを見る</router-link>
+                <router-link :to="`/view-calendar/${id}`" rel="noopener" target="_blank">閲覧専用カレンダー</router-link>
+                <router-link :to="`/view-calendar/${id}/${editKey}`" rel="noopener" target="_blank">参加登録可能カレンダー</router-link>
             </template>
             <template v-else>
                 <b-field label="カレンダーのタイトル">
@@ -40,11 +41,14 @@ export default {
     data() {
         return {
             id: "",
+            editKey: "",
         }
     },
     methods: {
         onRegisterButtonClicked() {
-            this.id = this.addCalendar()
+            const result = this.addCalendar()
+            this.id = result.id
+            this.editKey = result.editKey
         },
         onClose() {
             this.id = ""
