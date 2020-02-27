@@ -26,6 +26,11 @@ export default new Router({
       component: ViewCalendar
     },
     {
+      path: `${VIEW_CALENDAR}/:id/:editKey`,
+      name: 'ViewCalendar',
+      component: ViewCalendar
+    },
+    {
       path: '*',
       name: 'Not Found',
      // component

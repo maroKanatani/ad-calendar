@@ -15,6 +15,7 @@
             postAlsoInHoliday: postAlsoInHoliday,
             schedules: schedules,
             addSchedule: addSchedule,
+            canEditSchedules: inputEditKey && (inputEditKey === calendarEditKey)
         }"/>
     </div>
     <Footer />
@@ -36,13 +37,16 @@ export default {
     },
     data() {
         const calendarId = this.$route.params.id
+        const inputEditKey = this.$route.params.editKey
         return {
             calendarTitle: "",
             targetMonth: new Date(),
             lastPostDate: 25,
             postAlsoInHoliday: false,
             schedules: [],
-            calendarId: calendarId
+            calendarEditKey: "",
+            calendarId: calendarId,
+            inputEditKey: inputEditKey,
         }
     },
     methods: {
@@ -56,6 +60,9 @@ export default {
                     this.lastPostDate = calendarData.post_until
                     this.targetMonth = calendarData.month.toDate()
                     this.schedules = calendarData.schedules
+                    this.calendarEditKey = calendarData.editKey
+                    console.log(this.calendarEditKey)
+                    console.log(this.inputEditKey)
                 } else {
                     console.log("No data")
                 }

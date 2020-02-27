@@ -1,5 +1,5 @@
 <template>
-    <div class="root">
+    <div class="board">
         <div class="columns">
             <div class="column is-size-3 has-text-centered">
                 {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
@@ -17,7 +17,8 @@
                         date: date, 
                         isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
                         schedule: findSchedule(date),
-                        addSchedule: addSchedule
+                        addSchedule: addSchedule,
+                        canEditSchedules: canEditSchedules
                     }" 
                 />
             </div>
@@ -41,6 +42,7 @@ export default {
         postAlsoInHoliday: Boolean,
         schedules: Array,
         addSchedule: Function,
+        canEditSchedules: Boolean,
     },
     data() {
         return {
@@ -111,7 +113,7 @@ export default {
 </script>
 
 <style>
-.root {
+.board {
     width: fit-content
 }
 .bottom0 {

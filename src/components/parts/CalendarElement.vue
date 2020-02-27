@@ -15,7 +15,7 @@
                 <a class="is-pulled-left" v-if="schedule.article_url" :href="schedule.article_url">{{schedule.article_title}}</a>
                 <div v-else>{{schedule.article_title}}</div>
             </div>
-            <button v-if="!schedule.author && !schedule.article_title" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
+            <button v-if="!schedule.author && !schedule.article_title && canEditSchedules" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
         </div>
     </div>
 </template>
@@ -32,6 +32,7 @@ export default {
         isPostDate: Boolean,
         schedule: Object,
         addSchedule: Function,
+        canEditSchedules: Boolean,
     },
     data() {
         return {
@@ -70,5 +71,6 @@ export default {
 .card-content-element {
     padding: 0.75rem;
     height: 10rem;
+    width: 9rem;
 }
 </style>
