@@ -15,6 +15,7 @@
             postAlsoInHoliday: postAlsoInHoliday,
             schedules: schedules,
             addSchedule: addSchedule,
+            updateSchedule: updateSchedule,
             canEditSchedules: inputEditKey && (inputEditKey === calendarEditKey)
         }"/>
     </div>
@@ -75,6 +76,7 @@ export default {
                 querySnapshot.forEach(doc => {
                     if(doc.exists) {
                         const scheduleData = doc.data()
+                        scheduleData.id = doc.id
                         scheduleResult.push(scheduleData)
                     } else {
                         console.log("No schedules")
@@ -87,13 +89,24 @@ export default {
         addSchedule(date, author, authorUrl, articleTitle, articleUrl) {
             const ref = db.collection('schedules').doc()
             ref.set({
-                    article_title: articleTitle,
-                    article_url: articleUrl,
-                    author: author,
-                    author_url: authorUrl,
-                    calendar_id: this.calendarId,
-                    post_date: firebase.firestore.Timestamp.fromDate(new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth(), date)),
-                    created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+                article_title: articleTitle,
+                article_url: articleUrl,
+                author: author,
+                author_url: authorUrl,
+                calendar_id: this.calendarId,
+                post_date: firebase.firestore.Timestamp.fromDate(new Date(this.targetMonth.getFullYear(), this.targetMonth.getMonth(), date)),
+                created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+            })
+            this.getCalendar()
+        },
+        updateSchedule(id, author, authorUrl, articleTitle, articleUrl) {
+            const ref = db.collection('schedules').doc(id)
+            ref.update({
+                article_title: articleTitle,
+                article_url: articleUrl,
+                author: author,
+                author_url: authorUrl,
+                updated_at: firebase.firestore.Timestamp.fromDate(new Date())
             })
             this.getCalendar()
         }

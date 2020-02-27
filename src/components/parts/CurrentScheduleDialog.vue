@@ -53,19 +53,21 @@
 export default {
     props: {
         date: Number,
-        addSchedule: Function,
+        updateSchedule: Function,
+        dialogData: Object,
     },
     data() {
         return {
-            author: '',
-            authorUrl: '',
-            articleTitle: '',
-            articleUrl: ''
+            id: this.dialogData.id,
+            author: this.dialogData.author,
+            authorUrl: this.dialogData.authorUrl,
+            articleTitle: this.dialogData.articleTitle,
+            articleUrl: this.dialogData.articleUrl,
         }
     },
     methods: {
         async onRegisterButtonClicked() {
-            await this.addSchedule(this.date, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
+            await this.updateSchedule(this.id, this.author, this.authorUrl, this.articleTitle, this.articleUrl)
             this.$parent.close()
         },
     }

@@ -18,6 +18,7 @@
                         isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
                         schedule: findSchedule(date),
                         addSchedule: addSchedule,
+                        updateSchedule: updateSchedule,
                         canEditSchedules: canEditSchedules
                     }" 
                 />
@@ -42,6 +43,7 @@ export default {
         postAlsoInHoliday: Boolean,
         schedules: Array,
         addSchedule: Function,
+        updateSchedule: Function,
         canEditSchedules: Boolean,
     },
     data() {

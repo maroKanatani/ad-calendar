@@ -5,6 +5,9 @@
             <p class="card-header-title">
                 {{date}}
             </p>
+            <button class="button edit-button" @click="onEditButtonClicked" v-if="isPostDate && canEditSchedules && schedule.author && schedule.article_title ">
+                <b-icon pack="fas" icon="edit" size="is-small"></b-icon>
+            </button>
         </header>
         <div class="card-content card-content-element"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
             <div class="is-clearfix">
@@ -22,6 +25,7 @@
 
 <script>
 import AddScheduleDialog from '@/components/parts/AddScheduleDialog'
+import CurrentScheduleDialog from '@/components/parts/CurrentScheduleDialog'
 import { NEW_CALENDAR } from '@/router/pathStrings'
 
 export default {
@@ -32,6 +36,7 @@ export default {
         isPostDate: Boolean,
         schedule: Object,
         addSchedule: Function,
+        updateSchedule: Function,
         canEditSchedules: Boolean,
     },
     data() {
@@ -50,6 +55,27 @@ export default {
                 props: {
                     date: this.date,
                     addSchedule: this.addSchedule
+                }
+            })
+        },
+        onEditButtonClicked() {
+            this.$buefy.modal.open({
+                parent: this,
+                component: CurrentScheduleDialog,
+                hasModalCard: true,
+                customClass: 'custom-class custom-class-2',
+                trapFocus: true,
+                props: {
+                    date: this.date,
+                    dialogData: {
+                        id: this.schedule.id,
+                        author: this.schedule.author,
+                        authorUrl: this.schedule.author_url,
+                        articleTitle: this.schedule.article_title,
+                        articleUrl: this.schedule.article_url,
+
+                    },
+                    updateSchedule: this.updateSchedule
                 }
             })
         },
@@ -72,5 +98,9 @@ export default {
     padding: 0.75rem;
     height: 10rem;
     width: 9rem;
+}
+.edit-button {
+    background-color: transparent;
+    border-color: transparent;
 }
 </style>
