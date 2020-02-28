@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { VIEW_CALENDAR } from '@/router/pathStrings'
+
 export default {
     props: {
         calendarTitle: String,
@@ -65,10 +67,10 @@ export default {
             return this.id !== ""
         },
         readOnlyUrl() {
-            return `${location.origin}/${this.id}`
+            return `${location.origin}${VIEW_CALENDAR}/${this.id}`
         },
         editableUrl() {
-            return `${location.origin}/${this.id}/${this.editKey}` 
+            return `${location.origin}${VIEW_CALENDAR}/${this.id}/${this.editKey}` 
         },
     }
 }
