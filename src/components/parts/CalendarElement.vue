@@ -110,10 +110,11 @@ export default {
     line-height: 1.8; 
 }
 .article-title {
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    height: 3.6em;
-    line-height: 1.8; 
+    /* height: 3.6em; */
+    line-height: 1.5;
+    font-size: 0.1em;
+    display: -webkit-box;
 }
 </style>
