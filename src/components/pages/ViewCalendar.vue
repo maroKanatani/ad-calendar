@@ -87,6 +87,10 @@ export default {
             this.schedules = scheduleResult
         },
         addSchedule(date, author, authorUrl, articleTitle, articleUrl) {
+            if(!author || !articleTitle) {
+                alert("記事を書く人と記事のタイトルは入力必須です")
+                return ;
+            }
             const ref = db.collection('schedules').doc()
             ref.set({
                 article_title: articleTitle,
@@ -100,6 +104,10 @@ export default {
             this.getCalendar()
         },
         updateSchedule(id, author, authorUrl, articleTitle, articleUrl) {
+            if(!author || !articleTitle) {
+                alert("記事を書く人と記事のタイトルは入力必須です")
+                return ;
+            }
             const ref = db.collection('schedules').doc(id)
             ref.update({
                 article_title: articleTitle,
