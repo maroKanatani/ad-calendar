@@ -139,7 +139,7 @@ export default {
 
 <style scoped>
 .container {
-    width: fit-content
+    width: 100%
 }
 .page-title {
     padding-top: 2rem
