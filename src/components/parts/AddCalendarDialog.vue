@@ -29,7 +29,7 @@
         </section>
         <footer class="modal-card-foot">
             <button class="button" type="button" @click="onClose">キャンセル</button>
-            <button class="button is-primary" type="button" @click="onRegisterButtonClicked">登録</button>
+            <button class="button is-primary" v-if="!hasId" type="button" @click="onRegisterButtonClicked">登録</button>
         </footer>
     </div>
 </template>
