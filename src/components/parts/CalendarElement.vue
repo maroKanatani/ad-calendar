@@ -10,11 +10,11 @@
             </button>
         </header>
         <div class="card-content card-content-element"  v-bind:class="[isNewCalendar || !isPostDate? 'is-invisible': '' ]">
-            <div class="is-clearfix">
+            <div class="is-clearfix author">
                 <a class="is-pulled-left" v-if="schedule.author_url" :href="schedule.author_url">{{schedule.author}}</a>
                 <div v-else>{{schedule.author}}</div>
             </div>
-            <div class="is-clearfix">
+            <div class="is-clearfix article-title">
                 <a class="is-pulled-left" v-if="schedule.article_url" :href="schedule.article_url">{{schedule.article_title}}</a>
                 <div v-else>{{schedule.article_title}}</div>
             </div>
@@ -73,7 +73,6 @@ export default {
                         authorUrl: this.schedule.author_url,
                         articleTitle: this.schedule.article_title,
                         articleUrl: this.schedule.article_url,
-
                     },
                     updateSchedule: this.updateSchedule
                 }
@@ -102,5 +101,19 @@ export default {
 .edit-button {
     background-color: transparent;
     border-color: transparent;
+}
+.author {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    height: 1.8em;
+    line-height: 1.8; 
+}
+.article-title {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 3.6em;
+    line-height: 1.8; 
 }
 </style>

@@ -117,7 +117,6 @@ export default {
 <style>
 .board {
     width: 100%;
-    white-space: nowrap;
     overflow-x: scroll;
 }
 .bottom0 {
