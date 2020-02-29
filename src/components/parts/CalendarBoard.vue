@@ -126,6 +126,6 @@ export default {
     border: 1px solid lightgrey;
 }
 .week {
-    width: 9rem
+    min-width: 11rem;
 }
 </style>

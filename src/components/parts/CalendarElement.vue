@@ -18,7 +18,9 @@
                 <a class="is-pulled-left" v-if="schedule.article_url" :href="schedule.article_url">{{schedule.article_title}}</a>
                 <div v-else>{{schedule.article_title}}</div>
             </div>
-            <button v-if="!schedule.author && !schedule.article_title && canEditSchedules" v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
+            <div v-if="!schedule.author && !schedule.article_title && canEditSchedules" class="join-button-area">
+                <button v-on:click="onJoinButtonClicked" class="button is-primary">参加登録する</button>
+            </div>
         </div>
     </div>
 </template>
@@ -96,7 +98,7 @@ export default {
 .card-content-element {
     padding: 0.75rem;
     height: 10rem;
-    width: 9rem;
+    min-width: 11rem;
 }
 .edit-button {
     background-color: transparent;
@@ -111,5 +113,8 @@ export default {
 }
 .article-title {
     overflow: hidden;
+}
+.join-button-area{
+    text-align: center;
 }
 </style>
