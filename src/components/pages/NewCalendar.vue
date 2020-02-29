@@ -7,16 +7,7 @@
                 カレンダーを作る
             </div>
         </div>
-        <NewCalendarSetting v-bind="{
-            calendarTitle: calendarTitle,
-            targetMonth: targetMonth,
-            changeTargetMonth: changeTargetMonth,
-            lastPostDate: lastPostDate,
-            changeLastPostDate: changeLastPostDate,
-            lastDate: lastDate,
-            postAlsoInHoliday: postAlsoInHoliday,
-            togglePostAlsoInHoliday: togglePostAlsoInHoliday,
-        }"/>
+        <NewCalendarSetting v-bind="{ ...calendarSettings }"/>
         <CalendarBoard v-bind="{
             targetMonth: targetMonth, 
             lastPostDate: lastPostDate, 
@@ -26,7 +17,7 @@
         }"/>
         <div class="columns">
             <div class="column is-full has-text-centered button-area">
-                <b-button type="is-primary">カレンダーを登録する</b-button>
+                <b-button @click="onAddButtonClicked" type="is-primary">カレンダーを登録する</b-button>
             </div>
         </div>
     </div>
@@ -39,6 +30,10 @@ import Navbar from '@/components/globals/Navbar'
 import NewCalendarSetting from '@/components/parts/NewCalendarSetting'
 import CalendarBoard from '@/components/parts/CalendarBoard'
 import Footer from '@/components/globals/Footer'
+import AddCalendarDialog from '@/components/parts/AddCalendarDialog'
+import db from '@/firebase/firebaseInit'
+import firebase from 'firebase'
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
     components: {
@@ -47,12 +42,10 @@ export default {
         CalendarBoard,
         Footer,
     },
-    data() {
-        return {
-            calendarTitle: "",
-        }
-    },
     methods: {
+        inputCalendarTitle(e) {
+            this.$store.dispatch('calendar/updateCalendarTitle', e)
+        },
         changeTargetMonth(e) {
             this.$store.dispatch('calendar/updateTargetMonth', new Date(e.getFullYear(), e.getMonth()))
         },
@@ -61,9 +54,40 @@ export default {
         },
         changeLastPostDate(e) {
             this.$store.dispatch('calendar/updateLastPostDate', e)
-        }
+        },
+        addCalendar() {
+            const settings = this.calendarSettings
+            const editKey = uuidv4()
+            const ref = db.collection('calendars').doc()
+            ref.set({
+                month: firebase.firestore.Timestamp.fromDate(settings.targetMonth),
+                name: settings.calendarTitle,
+                post_also_in_holiday: settings.postAlsoInHoliday,
+                post_until: settings.lastPostDate,
+                edit_key: editKey,
+                created_at: firebase.firestore.Timestamp.fromDate(new Date()),
+            })
+            return {id: ref.id, editKey: editKey}
+        },
+        onAddButtonClicked() {
+            if(this.calendarTitle === "") {
+                alert("カレンダーのタイトルが未入力です")
+                return ;
+            }
+            this.$buefy.modal.open({
+                parent: this,
+                component: AddCalendarDialog,
+                hasModalCard: true,
+                customClass: 'custom-class custom-class-2',
+                trapFocus: true,
+                props: {...this.calendarSettings, addCalendar: this.addCalendar}
+            })
+        },
     },
     computed: {
+        calendarTitle() {
+            return this.$store.state.calendar.calendarTitle
+        },
         targetMonth() {
             return this.$store.state.calendar.targetMonth
         },
@@ -83,6 +107,19 @@ export default {
         lastPostDate() {
             return this.$store.state.calendar.lastPostDate
         },
+        calendarSettings() {
+            return {
+                calendarTitle: this.calendarTitle,
+                inputCalendarTitle: this.inputCalendarTitle,
+                targetMonth: this.targetMonth,
+                changeTargetMonth: this.changeTargetMonth,
+                lastPostDate: this.lastPostDate,
+                changeLastPostDate: this.changeLastPostDate,
+                lastDate: this.lastDate,
+                postAlsoInHoliday: this.postAlsoInHoliday,
+                togglePostAlsoInHoliday: this.togglePostAlsoInHoliday,
+            }
+        }
     }
 }
 </script>
@@ -92,7 +129,7 @@ export default {
     padding: 30px
 }
 .container {
-    width: fit-content
+    width: 100%
 }
 .page-title {
     padding-top: 2rem

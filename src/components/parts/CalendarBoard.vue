@@ -1,5 +1,5 @@
 <template>
-    <div class="root">
+    <div class="board">
         <div class="columns">
             <div class="column is-size-3 has-text-centered">
                 {{`${targetMonth.getFullYear()}年${targetMonth.getMonth() + 1}月`}}
@@ -7,7 +7,7 @@
         </div>
         <div class="columns is-gapless is-size-5 is-mobile bottom0">
             <div v-for="(dayOfWeek, key) in dayOfWeeks" :key="key" class="column has-text-centered table-column">
-                {{dayOfWeek}}
+                <div class="week">{{dayOfWeek}}</div>
             </div>
         </div>
         <div class="columns is-gapless is-mobile bottom0"  v-for="(weeklyDateList, key) in monthlyDateList" :key="key">
@@ -15,7 +15,11 @@
                 <CalendarElement 
                     v-bind="{
                         date: date, 
-                        isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date))
+                        isPostDate: isPostDate(new Date(targetMonth.getFullYear(), targetMonth.getMonth(), date)),
+                        schedule: findSchedule(date),
+                        addSchedule: addSchedule,
+                        updateSchedule: updateSchedule,
+                        canEditSchedules: canEditSchedules
                     }" 
                 />
             </div>
@@ -37,6 +41,10 @@ export default {
         firstDate: Date,
         lastDate: Date,
         postAlsoInHoliday: Boolean,
+        schedules: Array,
+        addSchedule: Function,
+        updateSchedule: Function,
+        canEditSchedules: Boolean,
     },
     data() {
         return {
@@ -66,6 +74,20 @@ export default {
                 return false
             }
             return true
+        },
+        findSchedule(date) {
+            const emptySchedule = {
+                article_title: '', 
+                author: ''
+            }
+            if(!this.schedules) {
+                return emptySchedule
+            }
+            const filteredSchedule = this.schedules.filter(s => s.post_date.toDate().getDate() === date);
+            if(filteredSchedule.length < 1) {
+                return emptySchedule
+            }
+            return filteredSchedule[0];
         }
     },
     computed: {
@@ -93,13 +115,17 @@ export default {
 </script>
 
 <style>
-.root {
-    width: fit-content
+.board {
+    width: 100%;
+    overflow-x: scroll;
 }
 .bottom0 {
   margin-bottom: 0 !important
 }
 .table-column {
     border: 1px solid lightgrey;
+}
+.week {
+    min-width: 11rem;
 }
 </style>

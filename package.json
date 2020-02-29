@@ -10,7 +10,9 @@
   "dependencies": {
     "buefy": "^0.8.10",
     "core-js": "^3.6.4",
+    "firebase": "^7.9.1",
     "japanese-holidays": "^1.0.9",
+    "uuid": "^7.0.1",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
