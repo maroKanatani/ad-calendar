@@ -7,7 +7,9 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <script>
       const faviconLink = document.querySelector("link[rel='icon']");
-      faviconLink.href =  `favicon${("0" + new Date().getDate()).slice(-2)}.png`
+      const now = new Date();
+      const nowDate = ("0" + now.getDate()).slice(-2);
+      faviconLink.href = "favicon" + nowDate + ".png";
     </script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <title><%= htmlWebpackPlugin.options.title %></title>
