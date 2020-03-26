@@ -99,6 +99,7 @@ export default {
     padding: 0.75rem;
     height: 10rem;
     min-width: 11rem;
+    overflow: hidden;
 }
 .edit-button {
     background-color: transparent;
